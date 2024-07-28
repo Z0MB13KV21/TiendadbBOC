@@ -1,0 +1,76 @@
+    body {
+        background-color: #ffffff !important;
+        color: #404040 !important;
+        font-family: 'IBM Plex Sans', sans-serif !important;
+        text-align: center !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        height: 100vh !important;
+        margin: 0 !important;
+    }
+    .error-container {
+        max-width: 600px !important;
+        margin: 0 auto !important;
+    }
+    .error-container h1 {
+        font-size: 5rem !important;
+        color: #ff0722 !important;
+    }
+    .error-container p {
+        font-size: 2.5rem !important;
+        margin-bottom: 2rem !important;
+    }
+    .btn-custom {
+        background-color: #404040 !important;
+        color: #ffffff !important;
+        font-size: 2.5rem !important;
+        padding: 0.75rem 1.5rem !important;
+        border: none !important;
+        border-radius: 0.5rem !important;
+        transition: background-color 0.3s ease !important;
+        color: 0.3s ease !important;
+    }
+    .btn-custom:hover {
+        background-color: #ff0722 !important;
+        color: #ffffff !important;
+    }
+
+    /* Modo oscuro */
+    @media (prefers-color-scheme: dark) {
+        body {
+            background-color: #121212 !important;
+            color: #e0e0e0 !important;
+        }
+        .error-container h1 {
+            color: #ff5722 !important;
+        }
+        .btn-custom {
+            background-color: #e0e0e0 !important;
+            color: #121212 !important;
+        }
+        .btn-custom:hover {
+            background-color: #ff5722 !important;
+            color: #ffffff !important;
+        }
+    }
+
+    /* Modo claro */
+    @media (prefers-color-scheme: light) {
+        body {
+            background-color: #ffffff !important;
+            color: #404040 !important;
+        }
+        .error-container h1 {
+            color: #ff0722 !important;
+        }
+        .btn-custom {
+            background-color: #404040 !important;
+            color: #ffffff !important;
+        }
+        .btn-custom:hover {
+            background-color: #ff0722 !important;
+            color: #ffffff !important;
+        }
+    }
+
