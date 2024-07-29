@@ -4,10 +4,7 @@ body {
     color: #404040 !important;
 }
 
-/* Estilos para texto en contenedores */
-.container, .row, .col-md-3, .col-md-9, .form-group, .form-control, .btn, .nav-link, .tab-content, .tab-pane, h1, h3, label, p, td, th {
-    color: #404040 !important;
-}
+
 
 /* Estilos para error-container */
 .error-container h1 {
@@ -35,24 +32,40 @@ body {
         background-color: #121212 !important;
         color: #e0e0e0 !important;
     }
+    .nav-link.active{background-color: #ffffff !important;
+        color:#121212 !important;}
+    .container, .row, .col-md-3, .col-md-9, .form-group, .btn, .nav-link, .tab-content, .tab-pane, h1, h3, label, p, td, th {
+    color: #ffffff !important;
+}
+#userRole, #userStatus, #editUserRole, #editUserStatus{color:#121212 !important}
     .error-container h1 {
         color: #ff5722 !important;
     }
     .error-container p {
         color: #e0e0e0 !important;
     }
-    .btn-custom, .btn-primary, .btn-secondary {
-        background-color: #e0e0e0 !important;
+    .btn-custom, .btn-primary {
+        background-color: #69ff5c !important;
         color: #121212 !important;
     }
-    .btn-custom:hover, .btn-primary:hover, .btn-secondary:hover {
-        background-color: #ff5722 !important;
+        .btn-danger,.btn-secondary{
+        background-color: #ff2f34  !important;
         color: #ffffff !important;
+    }
+    .btn-danger:hover, .btn-secondary:hover {
+        background-color: #ff0722 !important;
+        color: #ffffff !important;
+    }
+    .btn-custom:hover, .btn-primary:hover, .btn-secondary:hover {
+        background-color: #ffffff !important;
+        color: #404040 !important;
     }
     td, th {
         background-color: #1e1e1e !important;
         color: #e0e0e0 !important;
     }
+    /* Estilos para texto en contenedores */
+
 }
 
 /* Estilos en modo claro */
@@ -61,17 +74,27 @@ body {
         background-color: #ffffff !important;
         color: #404040 !important;
     }
+    .nav-link.active{background-color: #404040 !important;
+    color:#ffffff !important;}
     .error-container h1 {
         color: #ff0722 !important;
     }
     .error-container p {
         color: #404040 !important;
     }
-    .btn-custom, .btn-primary, .btn-secondary {
+    .btn-custom,  .btn-secondary, .btn-primary{
         background-color: #404040 !important;
         color: #ffffff !important;
     }
-    .btn-custom:hover, .btn-primary:hover, .btn-secondary:hover {
+    .btn-danger{
+        background-color: #ff2f34  !important;
+        color: #ffffff !important;
+    }
+    .btn-danger:hover {
+        background-color: #ff0722 !important;
+        color: #ffffff !important;
+    }
+    .btn-custom:hover, .btn-primary:hover, .btn-secondary:hover,.btn-danger:hover {
         background-color: #ff0722 !important;
         color: #ffffff !important;
     }
