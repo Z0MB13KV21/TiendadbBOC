@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 29-07-2024 a las 00:52:40
+-- Tiempo de generación: 30-07-2024 a las 05:14:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.3.9
 
@@ -32,6 +32,14 @@ CREATE TABLE `categorias` (
   `NCategoria` varchar(50) NOT NULL,
   `Descripción` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `categorias`
+--
+
+INSERT INTO `categorias` (`IdCateg`, `NCategoria`, `Descripción`) VALUES
+(1, 'holaa', 'adios'),
+(124, 'hey', 'you');
 
 -- --------------------------------------------------------
 
@@ -94,6 +102,13 @@ CREATE TABLE `productos` (
   `enlace` varchar(255) DEFAULT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`IdProduct`, `NProducto`, `Descripcion`, `Precio`, `Stock`, `NCategoria`, `enlace`, `estado`) VALUES
+(2, 'reloj', 'asdasdsd', 1321.00, 123, 124, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQC012hPrk2KRUGYk5oCOnF4wRC0yayh6qwA&s', 1);
 
 -- --------------------------------------------------------
 
@@ -179,7 +194,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `IdCateg` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdCateg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas`
@@ -197,7 +212,7 @@ ALTER TABLE `pedidos`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `IdProduct` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdProduct` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

@@ -1,19 +1,18 @@
 <?php
 class Factura {
     private $conn;
-    private $table_name = 'facturas';
+    private $table_name = "facturas";
 
     public function __construct($conn) {
         $this->conn = $conn;
     }
 
-    // Find a factura by ID
+    // Find factura by ID
     public function find($id) {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE NFactura = ?";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE IdFactura = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $id);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
@@ -27,51 +26,34 @@ class Factura {
 
     // Create a new factura
     public function create($data) {
-        $query = "INSERT INTO " . $this->table_name . " (IdProduct, Total, IdUser, Usuario) VALUES (:idproduct, :total, :iduser, :usuario)";
+        $query = "INSERT INTO " . $this->table_name . " (Fecha, Total, IdCliente) VALUES (:fecha, :total, :idCliente)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':idproduct', $data['IdProduct']);
+        $stmt->bindParam(':fecha', $data['Fecha']);
         $stmt->bindParam(':total', $data['Total']);
-        $stmt->bindParam(':iduser', $data['IdUser']);
-        $stmt->bindParam(':usuario', $data['Usuario']);
-
-        try {
-            $stmt->execute();
-            return ['id' => $this->conn->lastInsertId()];
-        } catch (PDOException $e) {
-            return ['error' => $e->getMessage()];
-        }
+        $stmt->bindParam(':idCliente', $data['IdCliente']);
+        $stmt->execute();
+        return ['id' => $this->conn->lastInsertId()];
     }
 
     // Update an existing factura
     public function update($id, $data) {
-        $query = "UPDATE " . $this->table_name . " SET IdProduct = :idproduct, Total = :total, IdUser = :iduser, Usuario = :usuario WHERE NFactura = :id";
+        $query = "UPDATE " . $this->table_name . " SET Fecha = :fecha, Total = :total, IdCliente = :idCliente WHERE IdFactura = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':idproduct', $data['IdProduct']);
+        $stmt->bindParam(':fecha', $data['Fecha']);
         $stmt->bindParam(':total', $data['Total']);
-        $stmt->bindParam(':iduser', $data['IdUser']);
-        $stmt->bindParam(':usuario', $data['Usuario']);
-        $stmt->bindParam(':id', $id);
-
-        try {
-            $stmt->execute();
-            return ['status' => 'updated'];
-        } catch (PDOException $e) {
-            return ['error' => $e->getMessage()];
-        }
+        $stmt->bindParam(':idCliente', $data['IdCliente']);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return ['status' => 'updated'];
     }
 
     // Delete a factura
     public function delete($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE NFactura = :id";
+        $query = "DELETE FROM " . $this->table_name . " WHERE IdFactura = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id);
-
-        try {
-            $stmt->execute();
-            return ['status' => 'deleted'];
-        } catch (PDOException $e) {
-            return ['error' => $e->getMessage()];
-        }
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return ['status' => 'deleted'];
     }
 }
 ?>

@@ -1,23 +1,20 @@
 <?php
 class Categoria {
     private $conn;
-    private $table_name = 'categorias';
+    private $table_name = "categorias"; // Nombre de la tabla
 
     public function __construct($conn) {
         $this->conn = $conn;
     }
 
-    // Find a category by ID
     public function find($id) {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE IdCateg = ?";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE IdCateg = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $id);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Get all categories
     public function all() {
         $query = "SELECT * FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);
@@ -25,49 +22,49 @@ class Categoria {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Create a new category
+    // Método para obtener datos de categorías para el select
+    public function allForSelect() {
+        $query = "SELECT IdCateg, NCategoria, Descripción FROM " . $this->table_name;
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        // Formatear los datos para el select
+        $formattedCategories = [];
+        foreach ($categories as $category) {
+            $formattedCategories[] = [
+                'id' => $category['IdCateg'],
+                'text' => $category['IdCateg'] . ' - ' . $category['NCategoria'] . ' - ' . $category['Descripción']
+            ];
+        }
+        return $formattedCategories;
+    }
+
     public function create($data) {
-        $query = "INSERT INTO " . $this->table_name . " (NCategoria, Descripcion) VALUES (:ncategoria, :descripcion)";
+        $query = "INSERT INTO " . $this->table_name . " (NCategoria, Descripción) VALUES (:name, :description)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':ncategoria', $data['NCategoria']);
-        $stmt->bindParam(':descripcion', $data['Descripcion']);
-
-        try {
-            $stmt->execute();
-            return ['id' => $this->conn->lastInsertId()];
-        } catch (PDOException $e) {
-            return ['error' => $e->getMessage()];
-        }
+        $stmt->bindParam(':name', $data['Nombre'], PDO::PARAM_STR);
+        $stmt->bindParam(':description', $data['Descripcion'], PDO::PARAM_STR);
+        $stmt->execute();
+        return $this->find($this->conn->lastInsertId());
     }
 
-    // Update an existing category
     public function update($id, $data) {
-        $query = "UPDATE " . $this->table_name . " SET NCategoria = :ncategoria, Descripcion = :descripcion WHERE IdCateg = :id";
+        $query = "UPDATE " . $this->table_name . " SET NCategoria = :name, Descripción = :description WHERE IdCateg = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':ncategoria', $data['NCategoria']);
-        $stmt->bindParam(':descripcion', $data['Descripcion']);
-        $stmt->bindParam(':id', $id);
-
-        try {
-            $stmt->execute();
-            return ['status' => 'updated'];
-        } catch (PDOException $e) {
-            return ['error' => $e->getMessage()];
-        }
+        $stmt->bindParam(':name', $data['Nombre'], PDO::PARAM_STR);
+        $stmt->bindParam(':description', $data['Descripcion'], PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $this->find($id);
     }
 
-    // Delete a category
     public function delete($id) {
         $query = "DELETE FROM " . $this->table_name . " WHERE IdCateg = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id);
-
-        try {
-            $stmt->execute();
-            return ['status' => 'deleted'];
-        } catch (PDOException $e) {
-            return ['error' => $e->getMessage()];
-        }
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return ['message' => 'Categoría eliminada'];
     }
 }
 ?>

@@ -1,100 +1,58 @@
 <?php
 require_once __DIR__ . '/../db/Database.php';
+require_once __DIR__ . '/../module/HistoricoUsuario.php';
 
 class HistoricoUsuarioController {
+    private $model;
     private $conn;
 
     public function __construct() {
         $database = new Database();
         $this->conn = $database->getConnection();
+        $this->model = new HistoricoUsuario($this->conn);
     }
 
     public function get($id = null) {
-        $query = "SELECT * FROM historicousuario";
         if ($id) {
-            $query .= " WHERE IdUser = :id";
+            $result = $this->model->find($id);
+        } else {
+            $result = $this->model->all();
         }
-        $stmt = $this->conn->prepare($query);
-        if ($id) {
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        }
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        header('Content-Type: application/json');
         echo json_encode($result);
     }
 
     public function post() {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($data['IdUser']) || !isset($data['Usuario']) || !isset($data['NFactura']) || !isset($data['IdPedido'])) {
-            header('Content-Type: application/json');
-            http_response_code(400);
+        // Validar los datos
+        if (!$this->validarDatos($data)) {
             echo json_encode(['error' => 'Datos incompletos.']);
+            http_response_code(400); // Bad Request
             return;
         }
 
-        $query = "INSERT INTO historicousuario (IdUser, Usuario, NFactura, IdPedido) VALUES (:iduser, :usuario, :nfactura, :idpedido)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':iduser', $data['IdUser']);
-        $stmt->bindParam(':usuario', $data['Usuario']);
-        $stmt->bindParam(':nfactura', $data['NFactura']);
-        $stmt->bindParam(':idpedido', $data['IdPedido']);
-
-        if ($stmt->execute()) {
-            header('Content-Type: application/json');
-            http_response_code(201);
-            echo json_encode(['message' => 'Histórico de usuario creado correctamente.']);
-        } else {
-            header('Content-Type: application/json');
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al crear el histórico de usuario.']);
-        }
+        echo json_encode($this->model->create($data));
     }
 
     public function put($id) {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($data['Usuario']) || !isset($data['NFactura']) || !isset($data['IdPedido'])) {
-            header('Content-Type: application/json');
-            http_response_code(400);
+        // Validar los datos
+        if (!$this->validarDatos($data)) {
             echo json_encode(['error' => 'Datos incompletos.']);
+            http_response_code(400); // Bad Request
             return;
         }
 
-        $query = "UPDATE historicousuario SET Usuario = :usuario, NFactura = :nfactura, IdPedido = :idpedido WHERE IdUser = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->bindParam(':usuario', $data['Usuario']);
-        $stmt->bindParam(':nfactura', $data['NFactura']);
-        $stmt->bindParam(':idpedido', $data['IdPedido']);
-
-        if ($stmt->execute()) {
-            header('Content-Type: application/json');
-            http_response_code(200);
-            echo json_encode(['message' => 'Histórico de usuario actualizado correctamente.']);
-        } else {
-            header('Content-Type: application/json');
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al actualizar el histórico de usuario.']);
-        }
+        echo json_encode($this->model->update($id, $data));
     }
 
     public function delete($id) {
-        $query = "DELETE FROM historicousuario WHERE IdUser = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        echo json_encode($this->model->delete($id));
+    }
 
-        if ($stmt->execute()) {
-            header('Content-Type: application/json');
-            http_response_code(200);
-            echo json_encode(['message' => 'Histórico de usuario eliminado correctamente.']);
-        } else {
-            header('Content-Type: application/json');
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al eliminar el histórico de usuario.']);
-        }
+    private function validarDatos($data) {
+        return isset($data['IdUser']) && isset($data['Fecha']) && isset($data['Accion']) && isset($data['Detalle']);
     }
 }
 ?>

@@ -1,23 +1,22 @@
 <?php
 class HistoricoUsuario {
     private $conn;
-    private $table_name = 'historicousuario';
+    private $table_name = "historico_usuarios";
 
     public function __construct($conn) {
         $this->conn = $conn;
     }
 
-    // Find historical user record by user ID
+    // Find historico_usuario by ID
     public function find($id) {
-        $query = "SELECT * FROM " . $this->table_name . " WHERE IdUser = ?";
+        $query = "SELECT * FROM " . $this->table_name . " WHERE IdHistorico = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(1, $id);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Get all historical user records
+    // Get all historico_usuarios
     public function all() {
         $query = "SELECT * FROM " . $this->table_name;
         $stmt = $this->conn->prepare($query);
@@ -25,52 +24,38 @@ class HistoricoUsuario {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Create a new historical user record
+    // Create a new historico_usuario
     public function create($data) {
-        $query = "INSERT INTO " . $this->table_name . " (IdUser, Usuario, NFactura, IdPedido) VALUES (:iduser, :usuario, :nfactura, :idpedido)";
+        $query = "INSERT INTO " . $this->table_name . " (IdUser, Fecha, Accion, Detalle) VALUES (:idUser, :fecha, :accion, :detalle)";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':iduser', $data['IdUser']);
-        $stmt->bindParam(':usuario', $data['Usuario']);
-        $stmt->bindParam(':nfactura', $data['NFactura']);
-        $stmt->bindParam(':idpedido', $data['IdPedido']);
-
-        try {
-            $stmt->execute();
-            return ['id' => $this->conn->lastInsertId()];
-        } catch (PDOException $e) {
-            return ['error' => $e->getMessage()];
-        }
+        $stmt->bindParam(':idUser', $data['IdUser']);
+        $stmt->bindParam(':fecha', $data['Fecha']);
+        $stmt->bindParam(':accion', $data['Accion']);
+        $stmt->bindParam(':detalle', $data['Detalle']);
+        $stmt->execute();
+        return ['id' => $this->conn->lastInsertId()];
     }
 
-    // Update an existing historical user record
+    // Update an existing historico_usuario
     public function update($id, $data) {
-        $query = "UPDATE " . $this->table_name . " SET Usuario = :usuario, NFactura = :nfactura, IdPedido = :idpedido WHERE IdUser = :id";
+        $query = "UPDATE " . $this->table_name . " SET IdUser = :idUser, Fecha = :fecha, Accion = :accion, Detalle = :detalle WHERE IdHistorico = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':usuario', $data['Usuario']);
-        $stmt->bindParam(':nfactura', $data['NFactura']);
-        $stmt->bindParam(':idpedido', $data['IdPedido']);
-        $stmt->bindParam(':id', $id);
-
-        try {
-            $stmt->execute();
-            return ['status' => 'updated'];
-        } catch (PDOException $e) {
-            return ['error' => $e->getMessage()];
-        }
+        $stmt->bindParam(':idUser', $data['IdUser']);
+        $stmt->bindParam(':fecha', $data['Fecha']);
+        $stmt->bindParam(':accion', $data['Accion']);
+        $stmt->bindParam(':detalle', $data['Detalle']);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return ['status' => 'updated'];
     }
 
-    // Delete a historical user record
+    // Delete a historico_usuario
     public function delete($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE IdUser = :id";
+        $query = "DELETE FROM " . $this->table_name . " WHERE IdHistorico = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id);
-
-        try {
-            $stmt->execute();
-            return ['status' => 'deleted'];
-        } catch (PDOException $e) {
-            return ['error' => $e->getMessage()];
-        }
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return ['status' => 'deleted'];
     }
 }
 ?>

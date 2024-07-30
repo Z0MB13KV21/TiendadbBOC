@@ -1,97 +1,64 @@
 <?php
 require_once __DIR__ . '/../db/Database.php';
+require_once __DIR__ . '/../module/Categoria.php';
 
 class CategoriaController {
+    private $model;
     private $conn;
 
     public function __construct() {
         $database = new Database();
         $this->conn = $database->getConnection();
+        $this->model = new Categoria($this->conn);
     }
 
     public function get($id = null) {
-        $query = "SELECT * FROM categorias";
         if ($id) {
-            $query .= " WHERE IdCateg = :id";
+            $result = $this->model->find($id);
+        } else {
+            $result = $this->model->all();
         }
-        $stmt = $this->conn->prepare($query);
-        if ($id) {
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        }
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        header('Content-Type: application/json');
         echo json_encode($result);
     }
 
     public function post() {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode(file_get_contents('php://input'), true);
 
-        if (!isset($data['NCategoria']) || !isset($data['Descripcion'])) {
-            header('Content-Type: application/json');
-            http_response_code(400);
+        // Validar los datos
+        if (!$this->validarDatos($data)) {
             echo json_encode(['error' => 'Datos incompletos.']);
+            http_response_code(400); // Bad Request
             return;
         }
 
-        $query = "INSERT INTO categorias (NCategoria, Descripcion) VALUES (:ncategoria, :descripcion)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':ncategoria', $data['NCategoria']);
-        $stmt->bindParam(':descripcion', $data['Descripcion']);
-
-        if ($stmt->execute()) {
-            header('Content-Type: application/json');
-            http_response_code(201);
-            echo json_encode(['message' => 'Categoría creada correctamente.']);
-        } else {
-            header('Content-Type: application/json');
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al crear la categoría.']);
-        }
+        echo json_encode($this->model->create($data));
     }
 
     public function put($id) {
-        $data = json_decode(file_get_contents("php://input"), true);
-
-        if (!isset($data['NCategoria']) || !isset($data['Descripcion'])) {
-            header('Content-Type: application/json');
-            http_response_code(400);
+        $data = json_decode(file_get_contents('php://input'), true);
+    
+        // Validar los datos
+        if (!$this->validarDatos($data)) {
             echo json_encode(['error' => 'Datos incompletos.']);
+            http_response_code(400); // Bad Request
             return;
         }
-
-        $query = "UPDATE categorias SET NCategoria = :ncategoria, Descripcion = :descripcion WHERE IdCateg = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->bindParam(':ncategoria', $data['NCategoria']);
-        $stmt->bindParam(':descripcion', $data['Descripcion']);
-
-        if ($stmt->execute()) {
-            header('Content-Type: application/json');
-            http_response_code(200);
-            echo json_encode(['message' => 'Categoría actualizada correctamente.']);
-        } else {
-            header('Content-Type: application/json');
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al actualizar la categoría.']);
-        }
+    
+        echo json_encode($this->model->update($id, $data));
     }
 
     public function delete($id) {
-        $query = "DELETE FROM categorias WHERE IdCateg = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        echo json_encode($this->model->delete($id));
+    }
 
-        if ($stmt->execute()) {
-            header('Content-Type: application/json');
-            http_response_code(200);
-            echo json_encode(['message' => 'Categoría eliminada correctamente.']);
-        } else {
-            header('Content-Type: application/json');
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al eliminar la categoría.']);
-        }
+    // Método para obtener categorías para el select
+    public function getForSelect() {
+        $result = $this->model->allForSelect();
+        echo json_encode($result);
+    }
+
+    private function validarDatos($data) {
+        return isset($data['Nombre']) && isset($data['Descripcion']);
     }
 }
 ?>

@@ -1,100 +1,77 @@
 <?php
 require_once __DIR__ . '/../db/Database.php';
+require_once __DIR__ . '/../module/Producto.php';
+require_once __DIR__ . '/../module/Categoria.php';
 
 class ProductoController {
+    private $model;
     private $conn;
 
     public function __construct() {
         $database = new Database();
         $this->conn = $database->getConnection();
+        $this->model = new Producto($this->conn);
+    }
+
+    private function validarDatos($data) {
+        return isset($data['NProducto']) && isset($data['Descripcion']) && isset($data['Precio']) && isset($data['Stock']) && isset($data['NCategoria']) && isset($data['enlace']) && isset($data['estado']);
     }
 
     public function get($id = null) {
-        $query = "SELECT * FROM productos";
         if ($id) {
-            $query .= " WHERE IdProduct = :id";
+            echo json_encode($this->model->find($id));
+        } else {
+            echo json_encode($this->model->all());
         }
-        $stmt = $this->conn->prepare($query);
-        if ($id) {
-            $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        }
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        header('Content-Type: application/json');
-        echo json_encode($result);
     }
 
     public function post() {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode(file_get_contents('php://input'), true);
+        $productName = $data['NProducto'];
 
-        if (!isset($data['NProducto']) || !isset($data['Descripcion']) || !isset($data['Precio']) || !isset($data['Stock']) || !isset($data['NCategoria'])) {
-            header('Content-Type: application/json');
-            http_response_code(400);
-            echo json_encode(['error' => 'Datos incompletos.']);
+        // Comprobar si el nombre del producto ya existe
+        if ($this->model->existsByProductName($productName)) {
+            echo json_encode(['error' => 'El nombre del producto ya existe.']);
+            http_response_code(400); // Bad Request
             return;
         }
 
-        $query = "INSERT INTO productos (NProducto, Descripcion, Precio, Stock, NCategoria) VALUES (:nproducto, :descripcion, :precio, :stock, :ncategoria)";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':nproducto', $data['NProducto']);
-        $stmt->bindParam(':descripcion', $data['Descripcion']);
-        $stmt->bindParam(':precio', $data['Precio']);
-        $stmt->bindParam(':stock', $data['Stock']);
-        $stmt->bindParam(':ncategoria', $data['NCategoria']);
-        if ($stmt->execute()) {
-            header('Content-Type: application/json');
-            http_response_code(201);
-            echo json_encode(['message' => 'Producto creado correctamente.']);
+        if ($this->validarDatos($data)) {
+            echo json_encode($this->model->create($data));
         } else {
-            header('Content-Type: application/json');
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al crear el producto.']);
+            echo json_encode(['error' => 'Datos inválidos.']);
+            http_response_code(400); // Bad Request
         }
     }
 
     public function put($id) {
-        $data = json_decode(file_get_contents("php://input"), true);
+        $data = json_decode(file_get_contents('php://input'), true);
+        $productName = $data['NProducto'];
 
-        if (!isset($data['NProducto']) || !isset($data['Descripcion']) || !isset($data['Precio']) || !isset($data['Stock']) || !isset($data['NCategoria'])) {
-            header('Content-Type: application/json');
-            http_response_code(400);
-            echo json_encode(['error' => 'Datos incompletos.']);
+        // Comprobar si el nombre del producto ya existe para otro producto
+        $existingProduct = $this->model->existsByProductName($productName);
+        if ($existingProduct && $existingProduct['IdProduct'] != $id) {
+            echo json_encode(['error' => 'El nombre del producto ya existe.']);
+            http_response_code(400); // Bad Request
             return;
         }
 
-        $query = "UPDATE productos SET NProducto = :nproducto, Descripcion = :descripcion, Precio = :precio, Stock = :stock, NCategoria = :ncategoria WHERE IdProduct = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->bindParam(':nproducto', $data['NProducto']);
-        $stmt->bindParam(':descripcion', $data['Descripcion']);
-        $stmt->bindParam(':precio', $data['Precio']);
-        $stmt->bindParam(':stock', $data['Stock']);
-        $stmt->bindParam(':ncategoria', $data['NCategoria']);
-        if ($stmt->execute()) {
-            header('Content-Type: application/json');
-            http_response_code(200);
-            echo json_encode(['message' => 'Producto actualizado correctamente.']);
+        if ($this->validarDatos($data)) {
+            echo json_encode($this->model->update($id, $data));
         } else {
-            header('Content-Type: application/json');
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al actualizar el producto.']);
+            echo json_encode(['error' => 'Datos inválidos.']);
+            http_response_code(400); // Bad Request
         }
     }
 
     public function delete($id) {
-        $query = "DELETE FROM productos WHERE IdProduct = :id";
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        if ($stmt->execute()) {
-            header('Content-Type: application/json');
-            http_response_code(200);
-            echo json_encode(['message' => 'Producto eliminado correctamente.']);
-        } else {
-            header('Content-Type: application/json');
-            http_response_code(500);
-            echo json_encode(['error' => 'Error al eliminar el producto.']);
-        }
+        echo json_encode($this->model->delete($id));
+    }
+
+    public function getCategorias() {
+        $categoriaModel = new Categoria($this->conn);
+        $categorias = $categoriaModel->all();
+        echo json_encode($categorias);
     }
 }
 ?>
