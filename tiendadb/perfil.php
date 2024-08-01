@@ -19,7 +19,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   
   <link rel="icon" href="https://i.pinimg.com/originals/ad/67/73/ad6773b2604f7274955f4f39bbec42b7.png">
-  <title>PERFIL | TICOTECH</title>
+  <title>PERFIL | BOC</title>
   
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Dancing+Script|Raleway:500,600&display=swap" rel="stylesheet">
@@ -51,7 +51,7 @@
   <div class="background-container"></div>
   <header class="text-white py-3">
     <div class="container d-flex justify-content-between align-items-center" >
-      <h1 class="h3">Ticotech</h1>
+      <h1 class="h3">BOC</h1>
       <nav class="navbar navbar-expand-lg navbar-light">
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
@@ -62,7 +62,7 @@
         </div>
       </nav>
       <div class="text-center">
-        <img class="logo" src="https://i.pinimg.com/originals/68/ea/a5/68eaa5f9c3a7ed7e12d0b13b20a6f0fb.jpg" alt="Logo Ticotech" width="200" height="150">
+        <img class="logo" src="https://i.pinimg.com/originals/68/ea/a5/68eaa5f9c3a7ed7e12d0b13b20a6f0fb.jpg" alt="Logo BOC" width="200" height="150">
       </div>
     </div>
   </header>
@@ -83,7 +83,7 @@
 
   <footer class="text-white py-3 mt-4">
     <div class="container text-center">
-      <p>&copy; 2024 Ticotech. Todos los derechos reservados.</p>
+      <p>&copy; 2024 BOC. Todos los derechos reservados.</p>
     </div>
   </footer>
 
