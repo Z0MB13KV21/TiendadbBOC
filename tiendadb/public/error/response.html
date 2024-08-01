@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- IBM Plex Sans Font -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&display=swap">
+    <style>
+        body {
+            background-color: #ffffff;
+            color: #404040;
+            font-family: 'IBM Plex Sans', sans-serif;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .error-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .error-container h1 {
+            font-size: 5rem;
+            color: #ff0722;
+        }
+        .error-container p {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+        .btn-custom {
+            background-color: #404040;
+            color: #ffffff;
+            font-size: 2.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .btn-custom:hover {
+            background-color: #ff0722;
+            color: #ffffff;
+        }
+    
+        /* Modo oscuro */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #121212;
+                color: #e0e0e0;
+            }
+            .error-container h1 {
+                color: #ff5722;
+            }
+            .btn-custom {
+                background-color: #e0e0e0;
+                color: #121212;
+            }
+            .btn-custom:hover {
+                background-color: #ff5722;
+                color: #ffffff;
+            }
+        }
+    
+        /* Modo claro */
+        @media (prefers-color-scheme: light) {
+            body {
+                background-color: #ffffff;
+                color: #404040;
+            }
+            .error-container h1 {
+                color: #ff0722;
+            }
+            .btn-custom {
+                background-color: #404040;
+                color: #ffffff;
+            }
+            .btn-custom:hover {
+                background-color: #ff0722;
+                color: #ffffff;
+            }
+        }
+    </style>
+    
+    <meta http-equiv="refresh" content="3;url=../index.php">
+</head>
+<body>
+    <div class="error-container">
+        <h1>Error</h1>
+        <p>Ha ocurrido un error durante la solicitud. Redirigiendo a la página principal...</p>
+        <a href="../frontend/index.php" class="btn btn-custom">Volver a Inicio</a>
+    </div>
+</body>
+</html>
