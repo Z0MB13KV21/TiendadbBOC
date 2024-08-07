@@ -94,8 +94,9 @@ loginForm.addEventListener('submit', function(event) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Guardar el nombre de usuario en localStorage
+            // Guardar el nombre de usuario y el rol en localStorage
             localStorage.setItem('nombreUsuario', data.userName);
+            localStorage.setItem('userRole', data.role);
             // Redireccionar a perfil.php
             window.location.href = 'perfil.php';
         } else {
