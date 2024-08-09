@@ -27,7 +27,7 @@ body {
 
 /* Estilos en modo oscuro */
 @media (prefers-color-scheme: dark) {
-    body, a {
+    body, a, .modal-header, .modal-body{
         background-color: #121212 !important;
         color: #e0e0e0 !important;
     }
@@ -73,7 +73,7 @@ body {
 
 /* Estilos en modo claro */
 @media (prefers-color-scheme: light) {
-    body {
+    body{
         background-color: #ffffff !important;
         color: #404040 !important;
     }

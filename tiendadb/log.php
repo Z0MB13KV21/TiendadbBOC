@@ -1,9 +1,5 @@
 <?php
-require_once 'src/db/auth.php';
-if (isset($role)) {
-    header("Location: /tiendadb/perfil.php");
-    exit();
-}
+require_once 'src/db/verificarRol.php';
 ?>
 
 <!DOCTYPE html>
@@ -74,6 +70,7 @@ if (isset($role)) {
       display: block !important;
       margin-bottom: 5px !important;
     }
+
 
   </style>
 </head>

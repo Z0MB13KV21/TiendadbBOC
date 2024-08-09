@@ -35,6 +35,7 @@ try {
                         $_SESSION['userRole'] = $user['Rol'];
                         $response['success'] = true;
                         $response['userName'] = $user['Usuario'];
+                        $response['userRole'] = $user['Rol']; 
                     } else {
                         $response['errors']['usuario_correo'] = 'El usuario está inactivo.';
                     }

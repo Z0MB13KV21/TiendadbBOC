@@ -13,9 +13,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }).addTo(map);
 
-
-
-
     var BOCLocations = [
 
         { latitude: 9.9962656, longitude: -84.111725, name: "BOC Heredia" },

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 01-08-2024 a las 05:52:40
+-- Tiempo de generación: 30-07-2024 a las 05:14:22
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.3.9
 
@@ -39,8 +39,7 @@ CREATE TABLE `categorias` (
 
 INSERT INTO `categorias` (`IdCateg`, `NCategoria`, `Descripción`) VALUES
 (1, 'holaa', 'adios'),
-(124, 'hey', 'you'),
-(125, 'Teclado', 'Un teclado que teclea');
+(124, 'hey', 'you');
 
 -- --------------------------------------------------------
 
@@ -137,16 +136,7 @@ INSERT INTO `usuarios` (`IdUser`, `Usuario`, `Nombre`, `Apellido`, `Email`, `Con
 (3, 'brandon2', 'brandon1', 'serrano', 'hola@gmail.com', '123Aa.', 'Administrador', 1),
 (9, 'Patitowuww', 'asd', 'serrano', 'hola@gmail.com', '123Aa.', 'Administrador', 1),
 (10, 'brandon12', 'asd', 'serrano', 'hola@gmail.com', '123Aa.', 'Cajero', 1),
-(11, 'brandon123', 'Keisy Valeria Castillo Flores', 'asd', 'brandon@hotmail.es', '123Aa.', 'Administrador', 1),
-(12, 'ello', 'nei', 'bor', 'Patitowuww@hotmail.com', '$2y$10$sSWNSwtosRUJjER4ILjBH.yWm7mDVo72qsArLNCJDw5C/55NkA40e', 'Usuario', 1),
-(13, 'ello', 'nei', 'bor', 'Patitowuww@hotmail.com', '$2y$10$nhvwhwZg0rekdhYeUkFd3uMuN0b/F/pyU7KaXFS4WC8LAvAxy27XO', 'Usuario', 1),
-(14, 'ello', 'nei', 'bor', 'Patitowuww@hotmail.com', '$2y$10$HY1tAjUMO0oJdqBHXD3JM.PDn5brmgJg2uA7IJMkEJ3Hju5ViH6Aq', 'Usuario', 1),
-(15, 'ello', 'nei', 'bor', 'Patitowuww@hotmail.com', '$2y$10$rmtBdQAzzRQY9tgxgCLcx.0wCIuwsYHCg/XxIYoJyy16BPhzHsrRq', 'Usuario', 1),
-(16, 'ellos', 'nei', 'bor', 'Patitowuww@hotmail.com', '$2y$10$hDkQxP9lILiuG3Tu7gor.OC4O7vjAcQXDZqcHQvpk/yQjqKg1tPVe', 'Usuario', 1),
-(17, 'asd', 'asd', 'asd', 'asd@asd.com', '$2y$10$gPWiJGQUk2WvdMLClND5.uw.vbzZeu2YSTej9kKxF9Xs.tY1s6y7W', 'Administrador', 1),
-(18, 'asdasdasdasd', 'Keisy Valeria Castillo Flores', 'serrano', 'brandon@hotmail.es', '$2y$10$6Kz0xI/dR3ETNHDbLrqS0O.jRQj2TAU2wnPB65Cg2DybHB6UiVRJK', 'Administrador', 1),
-(19, 'asdjhtfhfjhdhgd', 'Keisy Valeria Castillo Flores', 'serrano', 'brandon@hotmail.es', '$2y$10$ifB8qAPkGTWO0ZHY4adhNeMfNk/NyEBO.MoRS2BCa2a8XCATt9uTm', 'Cajero', 1),
-(20, 'jkbashbkdas', 'kjbasdkb', 'kbjasdjkb', 'AKSD@HOTMAIL.COM', '$2y$10$W26379yZ7eBRNFFeC2YRNeCz5AwZxi9KFvv9Q4k5.xUGr6SwqxWUy', 'Usuario', 1);
+(11, 'brandon123', 'Keisy Valeria Castillo Flores', 'asd', 'brandon@hotmail.es', '123Aa.', 'Administrador', 1);
 
 --
 -- Índices para tablas volcadas
@@ -204,7 +194,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `IdCateg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `IdCateg` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT de la tabla `facturas`
@@ -228,7 +218,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `IdUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `IdUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Restricciones para tablas volcadas

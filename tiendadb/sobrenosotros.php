@@ -22,7 +22,7 @@ require_once 'src/db/auth.php';
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   
-  <link rel="icon" href="https://i.pinimg.com/originals/ad/67/73/ad6773b2604f7274955f4f39bbec42b7.png">
+  <link rel="icon" href="https://i.pinimg.com/originals/68/ea/a5/68eaa5f9c3a7ed7e12d0b13b20a6f0fb.jpg">
   <title>Sobre Nosotros | BOC</title>
   
   <!-- Fonts -->
