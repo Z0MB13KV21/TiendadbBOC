@@ -73,6 +73,9 @@ $_SESSION['sessCustomerID'] = 1;
 
 <body>
     <div class="container">
+    <header>
+                <img class="logo" src="https://i.pinimg.com/originals/68/ea/a5/68eaa5f9c3a7ed7e12d0b13b20a6f0fb.jpg" alt="Logo Ticotech" width="250" height="150">
+    </header>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <!-- Barra de navegación para cambiar entre las diferentes secciones -->
@@ -133,6 +136,11 @@ $_SESSION['sessCustomerID'] = 1;
                     <a href="Ventas.php" class="btn btn-warning"><i class="glyphicon glyphicon-menu-left"></i> Continuar Comprando</a>
                     <a href="AccionCarta.php?action=placeOrder" class="btn btn-success orderBtn">Realizar pedido <i class="glyphicon glyphicon-menu-right"></i></a>
                 </div>
+                <footer class="text-white py-3 mt-4">
+        <div class="container text-center">
+            <p>&copy; 2024 BOC. Todos los derechos reservados.</p>
+        </div>
+    </footer>
             </div>
         <!-- Panel cierra -->
     </div>

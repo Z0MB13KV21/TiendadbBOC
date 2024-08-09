@@ -35,6 +35,7 @@ $cart = new Cart;
     align-items: center;
 }
 
+
 .container {
     text-align: center; /* Opcional: centra el texto dentro del contenedor */
 }
@@ -63,6 +64,9 @@ $cart = new Cart;
 <body>
     
     <div class="container">
+    <header>
+                <img class="logo" src="https://i.pinimg.com/originals/68/ea/a5/68eaa5f9c3a7ed7e12d0b13b20a6f0fb.jpg" alt="Logo Ticotech" width="250" height="150">
+    </header>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <!-- Barra de navegación con enlaces a otras secciones -->
@@ -130,6 +134,11 @@ $cart = new Cart;
                 </table>
 
             </div>
+            <footer class="text-white py-3 mt-4">
+        <div class="container text-center">
+            <p>&copy; 2024 BOC. Todos los derechos reservados.</p>
+        </div>
+    </footer>
         </div>
     </div>
 </body>

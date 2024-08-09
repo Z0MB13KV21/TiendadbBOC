@@ -1,4 +1,6 @@
-
+<?php
+require_once 'src/db/verificarRol.php';
+?>
 <!DOCTYPE html>
 <html lang="es-ES">
 
@@ -75,7 +77,7 @@
       <label class="label" id="nombreUsuario"></label>
       <img class="imgperfil" src="https://www.shutterstock.com/image-photo/serious-successful-arabian-businessman-formal-260nw-1879913899.jpg" alt="Imagen de perfil" style="width: 200px!important; height: auto;">
       <br>
-      <button class="btn btn-danger mt-3" onclick="logout()">Cerrar sesión</button>
+      <button class="btn btn-danger mt-3" id="logout-button">Cerrar sesión</button>
     </section>
   </main>
 </div>
@@ -87,7 +89,6 @@
     </div>
   </footer>
 
-
   <script>
     var nombreUsuario = localStorage.getItem("nombreUsuario");
     if (nombreUsuario) {
@@ -95,13 +96,32 @@
     } else {
       window.location.href = "index.php";
     }
+document.getElementById('logout-button').addEventListener('click', function() {
+    fetch('src/db/logout.php?action=logout', {
+        method: 'GET', // Método GET ya que estamos usando query string
+    })
+    .then(response => response.text()) // Esperar una respuesta de texto
+    .then(text => {
+        if (text === 'success') {
+            // Limpiar el localStorage
+            localStorage.removeItem('nombreUsuario');
+            localStorage.removeItem('userRole');
 
-    function logout() {
-      localStorage.removeItem("nombreUsuario");
-      window.location.href = "index.php";
-      alert("Has cerrado sesión exitosamente");
-    }
-  </script>
+            // Mostrar un mensaje de éxito
+            alert('Has cerrado sesión con éxito');
+
+            // Redirigir al usuario a la página principal
+            window.location.href = '/tiendadb/index.php';
+        } else {
+            alert('Error al cerrar sesión');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al cerrar sesión');
+    });
+});
+</script>
 </body>
 
 </html>

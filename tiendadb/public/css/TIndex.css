@@ -240,6 +240,7 @@ a {
         color: var(--color-text) !important;
     }
 
+
     .container, #map, #links, .button, footer, header {
         background-color: var(--color-background) !important;
         color:var(--color-primary) !important;

@@ -34,4 +34,5 @@ $GLOBALS['sessionData'] = [
     'userRole' => $role,
     'userId' => $userId
 ];
+
 ?>

@@ -62,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(result => {
             const [message, , email] = result.split('|');
             if (message.includes('Usuario encontrado')) {
-                // Suponemos que se redirige o se cambia a la pestaña de restablecimiento
+                //  se cambia a la pestaña de restablecimiento
                 document.getElementById('forgotPasswordContent').style.display = 'none';
                 document.getElementById('resetPasswordContent').style.display = 'block';
                 // Completar el campo de correo en el formulario de restablecimiento
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Opcional: redirigir al usuario o limpiar el formulario
                 resetPasswordForm.reset();
                 document.getElementById('resetPasswordContent').style.display = 'none';
-                document.getElementById('forgotPasswordContent').style.display = 'block';
+                document.getElementById('loginContent').style.display = 'block';
             } else {
                 newPasswordInput.classList.add('is-invalid');
                 newPasswordError.textContent = "Error al actualizar la contraseña. Inténtelo de nuevo.";

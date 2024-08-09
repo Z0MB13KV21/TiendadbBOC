@@ -1,7 +1,6 @@
 <?php
-require_once 'src/db/auth.php';
+require_once 'src/db/verificarRol.php';
 ?>
-
 
 <!DOCTYPE html>
 <html lang="es-ES">
@@ -115,7 +114,7 @@ require_once 'src/db/auth.php';
         </li>
         <li id="loginSM" class="list-group-item"><a href="log.php">Iniciar Sesion</a></li>
         <li id="perfilSM"class="list-group-item"><a href="perfil.php">Perfil</a></li>
-        <li id="cerrarSesionSM"class="list-group-item"><a href="cerrarsesion.php">Cerrar Sesion</a></li>
+        <li id="cerrarSesionSM"class="list-group-item"><button class="btn btn-danger mt-3" id="logout-button">Cerrar sesión</button></li>
       </div>
           </ul>
         </div>
@@ -186,13 +185,32 @@ require_once 'src/db/auth.php';
     } else {
       window.location.href = "index.php";
     }
+document.getElementById('logout-button').addEventListener('click', function() {
+    fetch('src/db/logout.php?action=logout', {
+        method: 'GET', // Método GET ya que estamos usando query string
+    })
+    .then(response => response.text()) // Esperar una respuesta de texto
+    .then(text => {
+        if (text === 'success') {
+            // Limpiar el localStorage
+            localStorage.removeItem('nombreUsuario');
+            localStorage.removeItem('userRole');
 
-    function logout() {
-      localStorage.removeItem("nombreUsuario");
-      window.location.href = "sobrenosotros.php";
-      alert("Has cerrado sesión exitosamente");
-    }
-  </script>
+            // Mostrar un mensaje de éxito
+            alert('Has cerrado sesión con éxito');
+
+            // Redirigir al usuario a la página principal
+            window.location.href = '/tiendadb/index.php';
+        } else {
+            alert('Error al cerrar sesión');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al cerrar sesión');
+    });
+});
+</script>
 </body>
 
 </html>

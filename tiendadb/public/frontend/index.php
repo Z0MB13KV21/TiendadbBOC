@@ -1,3 +1,6 @@
+<?php
+require_once '../../src/db/verificarRol.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

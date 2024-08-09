@@ -1,5 +1,5 @@
 <?php
-require_once 'src/db/auth.php';
+require_once 'src/db/verificarRol.php';
 ?>
 <?php
 // Incluye archivo de configuración de la base de datos
@@ -139,7 +139,6 @@ if ($query === false) {
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1rem;
         }
     </style>
 </head>
@@ -165,7 +164,7 @@ if ($query === false) {
                             </li>
                             <li id="loginSM" class="list-group-item"><a href="log.php">Iniciar Sesion</a></li>
                             <li id="perfilSM" class="list-group-item"><a href="perfil.php">Perfil</a></li>
-                            <li id="cerrarSesionSM" class="list-group-item"><a href="cerrarsesion.php">Cerrar Sesion</a></li>
+                            <li id="cerrarSesionSM"class="list-group-item"><button class="btn btn-danger mt-3" id="logout-button">Cerrar sesión</button></li>
                         </div>
                     </ul>
                 </div>
@@ -207,7 +206,7 @@ if ($query === false) {
                             // Muestra categorías en el select
                             if ($categoryQuery->num_rows > 0) {
                                 while ($category = $categoryQuery->fetch_assoc()) {
-                                    echo '<option value="' . htmlspecialchars($category['NCategoria']) . '">' . htmlspecialchars($category['IdCateg']) . '</option>';
+                                    echo '<option value="' . htmlspecialchars($category['NCategoria']) . '">' . htmlspecialchars($category['NCategoria']) . '</option>';
                                 }
                             }
                             ?>
@@ -273,6 +272,33 @@ if ($query === false) {
                 }
             });
         });
-    </script>
+ 
+document.getElementById('logout-button').addEventListener('click', function() {
+    fetch('src/db/logout.php?action=logout', {
+        method: 'GET', // Método GET ya que estamos usando query string
+    })
+    .then(response => response.text()) // Esperar una respuesta de texto
+    .then(text => {
+        if (text === 'success') {
+            // Limpiar el localStorage
+            localStorage.removeItem('nombreUsuario');
+            localStorage.removeItem('userRole');
+
+            // Mostrar un mensaje de éxito
+            alert('Has cerrado sesión con éxito');
+
+            // Redirigir al usuario a la página principal
+            window.location.href = '/tiendadb/index.php';
+        } else {
+            alert('Error al cerrar sesión');
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error al cerrar sesión');
+    });
+});
+
+</script>
 </body>
 </html>
