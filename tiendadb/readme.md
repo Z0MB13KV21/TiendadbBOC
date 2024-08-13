@@ -158,3 +158,4 @@ tiendadb/
 - NCategoria
 - enlace
 - estado
+![image](https://github.com/user-attachments/assets/c1119505-0eec-4778-ae74-cdc3a936fe65)
