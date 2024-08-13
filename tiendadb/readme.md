@@ -77,3 +77,84 @@ tiendadb/
 │           └── RestablecerContrasena.php
 
 └── README.md
+
+# Diagrama de Base de Datos
+
+## Tablas
+
+### Banco
+- **id** (PK)
+- tarjeta
+- CVV
+- saldo
+- mes
+- año
+
+### Categorías
+- **IdCateg** (PK)
+- NCategoria
+- Descripción
+
+### Facturas
+- **NFactura** (PK)
+- Total
+- **IdUser** (FK) -> Usuarios(IdUser)
+
+### Histórico de Usuario
+- **IdUser** (FK) -> Usuarios(IdUser)
+- Usuario
+- **NFactura** (FK) -> Facturas(NFactura)
+- **IdPedido** (FK) -> Pedidos(IdPedido)
+
+### Pedidos
+- **IdPedido** (PK)
+- **NFactura** (FK) -> Facturas(NFactura)
+- **IdUser** (FK) -> Usuarios(IdUser)
+- Usuario
+- Dirección
+- Provincia
+- Cantón
+- NúmeroContacto
+- Sede
+
+### Productos
+- **IdProduct** (PK)
+- NProducto
+- Descripción
+- Precio
+- Stock
+- **NCategoria** (FK) -> Categorías(NCategoria)
+- enlace
+- estado
+
+### Usuarios
+- **IdUser** (PK)
+- Usuario
+- Nombre
+- Apellido
+- Email
+- Contraseña
+- Rol
+- Estado
+
+## Vistas
+
+### Ofertas
+- **IdProduct**
+- NProducto
+- Descripción
+- Precio
+- Stock
+- NCategoria
+- enlace
+- estado
+
+### Productos Más Vendidos
+- **IdProduct**
+- NProducto
+- Descripción
+- Precio
+- Stock
+- NCategoria
+- enlace
+- estado
